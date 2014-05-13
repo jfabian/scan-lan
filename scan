@@ -1,0 +1,21 @@
+#!/usr/bin/python
+from gi.repository import Notify
+import subprocess, re, os
+
+print 'iniciando scan'
+path = os.path.dirname(__file__)
+with open(os.path.join(path, 'ips')) as i:
+    ipOrigin = i.read().splitlines()
+f = open(os.path.join(path, 'ips'), 'rw+')
+arpScan = "arp-scan --interface=wlan0 --localnet"
+process = subprocess.Popen(arpScan.split(), stdout=subprocess.PIPE)
+output = process.communicate()[0]
+for line in  output.split("\n") :
+    ips = re.findall( r'[0-9]+(?:\.[0-9]+){3}', line)
+    for ip in ips:
+        if ip not in ipOrigin:
+            Notify.init ("Hello world")
+            Hello=Notify.Notification.new ("Nueva conexion",ip,"dialog-information")
+            Hello.show ()
+        f.write(ip+'\n')
+f.close()
