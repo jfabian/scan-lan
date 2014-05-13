@@ -1,5 +1,6 @@
 #!/usr/bin/python
 from gi.repository import Notify
+<<<<<<< HEAD
 import subprocess, re, os
 
 print 'iniciando scan'
@@ -7,6 +8,13 @@ path = os.path.dirname(__file__)
 with open(os.path.join(path, 'ips')) as i:
     ipOrigin = i.read().splitlines()
 f = open(os.path.join(path, 'ips'), 'rw+')
+=======
+import subprocess, re
+
+with open('ips') as i:
+    ipOrigin = i.read().splitlines()
+f = open('ips', 'rw+')
+>>>>>>> 24c715c1c525f834ad27544cbc35c162f6216e5e
 arpScan = "arp-scan --interface=wlan0 --localnet"
 process = subprocess.Popen(arpScan.split(), stdout=subprocess.PIPE)
 output = process.communicate()[0]
